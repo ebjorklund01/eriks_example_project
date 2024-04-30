@@ -1,4 +1,3 @@
-
 // abstract classes are used to define a common interface for a set of classes
 abstract class LifeForm {
   final String name;
@@ -16,20 +15,20 @@ class Animal extends LifeForm {
   Animal(super.name);
 
   // Named constructor
-  Animal.named({required String name}) : super(name);
+  Animal.int({required int num}) : super(num.toString());
 
   Animal.defaultNamed({String name = 'Unknown'}) : super(name);
 
   // Example method
-  void makeSound() {
-    print('$name makes a sound');
+  void makeSound(String name) {
+    print('${this.name} makes a sound');
   }
 
   // Static method
   static void displayPlanetCount() {
     print('There are $planetCount planets where animals live.');
   }
-  
+
   @override
   void exist() {
     print('$name exists');
@@ -38,17 +37,20 @@ class Animal extends LifeForm {
 
 // Define a subclass Dog that inherits from Animal
 class Dog extends Animal {
-  final String breed; // An additional property
+  String _breed; // An additional property
+
+  String get dogBreed => _breed;
+  set dogBreed(String breed) => this._breed = breed; 
 
   // Default constructor, calling the super class constructor
-  Dog(String name, this.breed) : super(name);
+  Dog(super.name, this._breed);
 
   // Named constructor with different implementation
-  Dog.named({required String name, required this.breed}) : super.named(name: name);
+  // Dog.named({required String name, required this.breed}) : super.named(name: name);
 
   // Overriding a method
   @override
-  void makeSound() {
+  void makeSound(String name) {
     print('$name barks');
   }
 
@@ -60,11 +62,12 @@ class Dog extends Animal {
 
 void main() {
   var myDog = Dog('Rex', 'Golden Retriever');
-  myDog.makeSound(); // Output: Rex barks
+  myDog.makeSound('Rex'); // Output: Rex barks
 
   var unknownDog = Dog.fromBreed('Labrador');
   print(unknownDog.name); // Output: Unknown
-  print(unknownDog.breed); // Output: Labrador
+  print(unknownDog._breed); // Output: Labrador
 
-  Animal.displayPlanetCount(); // Static method call, Output: There are 1 planets where animals live.
+  Animal
+      .displayPlanetCount(); // Static method call, Output: There are 1 planets where animals live.
 }

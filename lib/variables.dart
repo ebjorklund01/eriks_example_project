@@ -27,6 +27,8 @@ void main() {
   String nonNullableString = nullableString ?? 'Default String';
   print('Non-Nullable String: $nonNullableString'); // Outputs: Non-Nullable String: Default String
 
+  String otherNonNull = nullableString == null ? 'This is not null' : 'This is null';
+
   // Example of static analysis
   // Uncomment the line below to see static analysis preventing a type mismatch
   // int number = 'This is not a number'; // This will cause a compile-time error

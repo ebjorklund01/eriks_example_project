@@ -15,7 +15,7 @@ extension AnimalExtension on Animal {
 extension AnimalListExtension on List<Animal> {
   void makeAllSounds() {
     for (var animal in this) {
-      animal.makeSound();
+      animal.makeSound('Unknown');
     }
   }
 

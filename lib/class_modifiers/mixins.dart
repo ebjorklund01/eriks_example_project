@@ -43,4 +43,5 @@ void main() {
   cat.eat(); // From Animal
   cat.walk(); // From Walkable
   cat.meow(); // From Cat
+  // cat.fly(); // Error: The method 'fly' isn't defined for the class 'Cat'.
 }

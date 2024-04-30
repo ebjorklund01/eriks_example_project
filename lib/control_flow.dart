@@ -4,8 +4,10 @@ void main() {
   // If statement
   if (name == 'Bob') {
     print('You are Bob');
+  } else if (name == 'Alice') {
+    print('You are Alice');
   } else {
-    print('You are not Bob');
+    print('You are not Bob or Alice');
   }
 
   // For loop

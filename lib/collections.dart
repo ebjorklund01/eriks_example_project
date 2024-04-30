@@ -37,7 +37,7 @@ void main() {
   bool containsThree = numbers.contains(3);
   print('Contains 3: $containsThree');
 
-  final mixedSet = {1, 'two', 3.0};
+  Set<dynamic> mixedSet = {1, 'two', 3.0, null};
 
   // Map example
   Map<String, int> phoneBook = {
@@ -50,6 +50,11 @@ void main() {
   // Accessing values
   int? aliceNumber = phoneBook['Alice'];
   print('Alice\'s number: $aliceNumber');
+
+  final keys = phoneBook.keys; // Iterable<String>
+  final values = phoneBook.values; // Iterable<int>
+  print('Keys: $keys');
+  print('Values: $values');
 
   // Mixed types
   final mixedMap = {
@@ -70,6 +75,7 @@ void main() {
     1,
     2,
     if (randomInt > 5) 3,
+    randomInt > 5 ? 4 : 0,
     4,
     5,
   ];

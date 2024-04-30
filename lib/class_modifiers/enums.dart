@@ -12,6 +12,15 @@ enum StatusCode {
 
   const StatusCode(this.code, this.description);
 
+  factory StatusCode.fromCode(int code) {
+    for (var status in StatusCode.values) {
+      if (status.code == code) {
+        return status;
+      }
+    }
+    return StatusCode.internalServerError;
+  }
+
   void describe() {
     print('Status $code: $description');
   }
@@ -23,11 +32,14 @@ void main() {
   print('Current season is $currentSeason');
 
   // Using enhanced enum
-  StatusCode status = StatusCode.notFound;
-  status.describe(); // Prints: Status 404: Not Found
+  StatusCode status = StatusCode.internalServerError;
+  status.describe(); // Prints: Status 500: Internal Server Error
 
   // Iterating over the StatusCode enum
   for (var status in StatusCode.values) {
     print('Code: ${status.code}, Description: ${status.description}');
   }
+
+  // Using a factory constructor
+  StatusCode notFound = StatusCode.fromCode(404);
 }
