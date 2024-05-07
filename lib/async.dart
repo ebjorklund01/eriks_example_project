@@ -1,10 +1,11 @@
 import 'dart:async';
 
 // Example of using a Future
-Future<String> fetchUserData({int seconds = 3}) {
-  return Future<String>.delayed(Duration(seconds: seconds), () {
+Future<String> fetchUserData({int seconds = 3}) async {
+  final value = await Future<String>.delayed(Duration(seconds: seconds), () {
     return "User data loaded";
   });
+  return value;
 }
 
 // Example of async function using await
