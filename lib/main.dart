@@ -1,6 +1,14 @@
 import 'package:eriks_example_project/cubits/counter_cubit.dart';
 import 'package:eriks_example_project/screens/basic_layout_screen.dart';
 import 'package:eriks_example_project/screens/counter_screen.dart';
+import 'package:eriks_example_project/screens/demo_screens/alan_screen.dart';
+import 'package:eriks_example_project/screens/demo_screens/alexey_screen.dart';
+import 'package:eriks_example_project/screens/demo_screens/erik_screen.dart';
+import 'package:eriks_example_project/screens/demo_screens/hagan_screen.dart';
+import 'package:eriks_example_project/screens/demo_screens/james_screen.dart';
+import 'package:eriks_example_project/screens/demo_screens/lucas_screen.dart';
+import 'package:eriks_example_project/screens/demo_screens/matt_screen.dart';
+import 'package:eriks_example_project/screens/demo_screens/oksana_screen.dart';
 import 'package:eriks_example_project/screens/gemini_chat_screen.dart';
 import 'package:eriks_example_project/screens/grid_layout_screen.dart';
 import 'package:eriks_example_project/screens/list_display_screen.dart';
@@ -106,6 +114,88 @@ class HomeScreen extends StatelessWidget {
                     builder: (context) => const GridLayoutScreen()),
               );
             },
+          ),
+          ExpansionTile(
+            title: const Text('AI Demo Screens'),
+            children: <Widget>[
+              ListTile(
+                title: const Text('Alan Screen'),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const AlanScreen()),
+                  );
+                },
+              ),
+              ListTile(
+                title: const Text('Alexey Screen'),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const AlexeyScreen()),
+                  );
+                },
+              ),
+              ListTile(
+                title: const Text('Erik Screen'),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const ErikScreen()),
+                  );
+                },
+              ),
+              ListTile(
+                title: const Text('Hagan Screen'),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const HaganScreen()),
+                  );
+                },
+              ),
+              ListTile(
+                title: const Text('James Screen'),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const JamesScreen()),
+                  );
+                },
+              ),
+              ListTile(
+                title: const Text('Lucas Screen'),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const LucasScreen()),
+                  );
+                },
+              ),
+              ListTile(
+                title: const Text('Matt Screen'),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const MattScreen()),
+                  );
+                },
+              ),
+              ListTile(
+                title: const Text('Oksana Screen'),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const OksanaScreen()),
+                  );
+                },
+              ),
+            ],
           ),
         ],
       ),
