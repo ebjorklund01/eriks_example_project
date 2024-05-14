@@ -1,125 +1,204 @@
+import 'package:eriks_example_project/cubits/counter_cubit.dart';
+import 'package:eriks_example_project/screens/basic_layout_screen.dart';
+import 'package:eriks_example_project/screens/counter_screen.dart';
+import 'package:eriks_example_project/screens/demo_screens/alan_screen.dart';
+import 'package:eriks_example_project/screens/demo_screens/alexey_screen.dart';
+import 'package:eriks_example_project/screens/demo_screens/erik_screen.dart';
+import 'package:eriks_example_project/screens/demo_screens/hagan_screen.dart';
+import 'package:eriks_example_project/screens/demo_screens/james_screen.dart';
+import 'package:eriks_example_project/screens/demo_screens/lucas_screen.dart';
+import 'package:eriks_example_project/screens/demo_screens/matt_screen.dart';
+import 'package:eriks_example_project/screens/demo_screens/oksana_screen.dart';
+import 'package:eriks_example_project/screens/gemini_chat_screen.dart';
+import 'package:eriks_example_project/screens/grid_layout_screen.dart';
+import 'package:eriks_example_project/screens/list_display_screen.dart';
+import 'package:eriks_example_project/screens/stream_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_gemini/flutter_gemini.dart';
 
-void main() {
+Future<void> main() async {
+  await dotenv.load(fileName: '.env');
+  Gemini.init(apiKey: dotenv.env['GEMINI_API_KEY']!);
+
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => CounterCubit()),
+      ],
+      child: MaterialApp(
+        title: 'Flutter',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.orange),
+          useMaterial3: true,
+        ),
+        home: const HomeScreen(),
       ),
-      home: const MyHomePage(title: 'Flutter Home Page'),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
+    final counterValue = context.watch<CounterCubit>().state;
+
     return Scaffold(
-      appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+      appBar: AppBar(title: Text('Home $counterValue')),
+      body: ListView(
+        children: <Widget>[
+          ListTile(
+            title: const Text('Gemini Chat'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const GeminiChatScreen()),
+              );
+            },
+          ),
+          ListTile(
+            title: const Text('Counter'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => CounterScreen()),
+              );
+            },
+          ),
+          ListTile(
+            title: const Text('Stream'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const StreamScreen()),
+              );
+            },
+          ),
+          ListTile(
+            title: const Text('Basic Layout'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const BasicLayoutScreen()),
+              );
+            },
+          ),
+          ListTile(
+            title: const Text('List Display'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const ListDisplayScreen()),
+              );
+            },
+          ),
+          ListTile(
+            title: const Text('Grid Layout'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const GridLayoutScreen()),
+              );
+            },
+          ),
+          ExpansionTile(
+            title: const Text('AI Demo Screens'),
+            children: <Widget>[
+              ListTile(
+                title: const Text('Alan Screen'),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const AlanScreen()),
+                  );
+                },
+              ),
+              ListTile(
+                title: const Text('Alexey Screen'),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const AlexeyScreen()),
+                  );
+                },
+              ),
+              ListTile(
+                title: const Text('Erik Screen'),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const ErikScreen()),
+                  );
+                },
+              ),
+              ListTile(
+                title: const Text('Hagan Screen'),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const HaganScreen()),
+                  );
+                },
+              ),
+              ListTile(
+                title: const Text('James Screen'),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const JamesScreen()),
+                  );
+                },
+              ),
+              ListTile(
+                title: const Text('Lucas Screen'),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const LucasScreen()),
+                  );
+                },
+              ),
+              ListTile(
+                title: const Text('Matt Screen'),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const MattScreen()),
+                  );
+                },
+              ),
+              ListTile(
+                title: const Text('Oksana Screen'),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const OksanaScreen()),
+                  );
+                },
+              ),
+            ],
+          ),
+        ],
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
