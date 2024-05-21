@@ -87,6 +87,8 @@ class _ErikScreenState extends State<ErikScreen> {
 
         The piece will be placed in the lowest available row in the specified column.
 
+        The only acceptable responses are integers between 0 and 6, inclusive.
+
         Example 1:
 
         -,-,-,-,-,-,-
